@@ -1,7 +1,7 @@
 import path from 'path';
+import zlib from 'zlib';
 import fs from 'mz/fs';
 import * as t from 'babel-types';
-import {encode} from '../lib/base62';
 import generateCode from '../lib/generateCode';
 import getContentsFactory from '../lib/getContents';
 import moduleExports from '../lib/moduleExports';
@@ -102,8 +102,8 @@ export default function packFeature () {
                 }, {});
                 packed.B = parseInt(statusesInverted[contents.status], 10);
                 return fs.writeFile(
-                    path.join(__dirname, `../../data/features/${name}.js`),
-                    stringifyObject(packed)
+                    path.join(__dirname, `../../data/features/${name}.js.zz`),
+                    zlib.deflateSync(stringifyObject(packed))
                 );
             }));
         });

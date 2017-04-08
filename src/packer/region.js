@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'mz/fs';
+import zlib from "zlib";
 import * as t from 'babel-types';
 import {encode} from '../lib/base62';
 import getContentsFactory from '../lib/getContents';
@@ -44,8 +45,8 @@ export default function packRegion () {
                 }, {});
                 
                 return fs.writeFile(
-                    path.join(__dirname, `../../data/regions/${region.name}.js`),
-                    stringifyObject(packed)
+                    path.join(__dirname, `../../data/regions/${region.name}.js.zz`),
+                    zlib.deflateSync(stringifyObject(packed))
                 );
             }));
         })    

@@ -1,3 +1,4 @@
+import zlib from "zlib";
 import fs from 'mz/fs';
 import path from 'path';
 import invertObject from '../lib/invertObject';
@@ -58,8 +59,8 @@ function packBrowserVersions (agents) {
     
     
     return fs.writeFile(
-        path.join(__dirname, `../../data/browserVersions.js`),
-        stringifyObject(browserVersions)
+        path.join(__dirname, `../../data/browserVersions.js.zz`),
+	    zlib.deflateSync(stringifyObject(browserVersions))
     ).then(() => [agents, browserVersions]);
 }
 
@@ -70,8 +71,8 @@ export default function packAgents () {
         .then(packBrowserVersions)
         .then(([agents, versions]) => {
             return fs.writeFile(
-                path.join(__dirname, `../../data/agents.js`),
-                stringifyObject(relevantKeys(versions, agents))
+                path.join(__dirname, `../../data/agents.js.zz`),
+	            zlib.deflateSync(stringifyObject(relevantKeys(versions, agents)))
             );
         });
 }

@@ -1,6 +1,7 @@
 /* Create a mapping from browser version strings to shorter identifiers. */
 
 import fs from 'mz/fs';
+import zlib from "zlib";
 import path from 'path';
 import stringifyObject from '../lib/stringifyObject';
 import {encode} from '../lib/base62';
@@ -17,7 +18,7 @@ function getBrowsers (data) {
 
 export default function packBrowsers () {
     return fs.writeFile(
-        path.join(__dirname, `../../data/browsers.js`),
-        stringifyObject(getBrowsers(require('caniuse-db/data.json').data))
+        path.join(__dirname, `../../data/browsers.js.zz`),
+	    zlib.deflateSync(stringifyObject(getBrowsers(require('caniuse-db/data.json').data)))
     );
 }
