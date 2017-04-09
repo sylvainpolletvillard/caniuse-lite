@@ -9,7 +9,8 @@
     "postbundle": "\\ls -lh bundle/*.gz | awk '{print \"Size:\", $5\"B\"}'",
     "prepublish": "del-cli dist && rollup -c rollup.config.js src/unpacker/index.js -o dist/unpacker/index.js",
     "pack": "babel-node src/packer/index.js",
-    "test": "jest src --coverage"
+    "test": "jest src --coverage",
+    "bench": "node benchmark/inflate"
   },
   "files": [
     "data",
