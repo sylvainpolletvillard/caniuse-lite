@@ -52,5 +52,8 @@
     "presets": [
       "env"
     ]
+  },
+  "dependencies": {
+    "glob": "^7.1.1"
   }
 }
